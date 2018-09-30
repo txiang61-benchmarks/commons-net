@@ -21,6 +21,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
+import org.checkerframework.common.value.qual.IntRange;
+import org.checkerframework.common.value.qual.IntVal;
+
 /**
  * DotTerminatedMessageReader is a class used to read messages from a
  * server that are terminated by a single dot followed by a
@@ -39,9 +42,9 @@ import java.io.Reader;
  */
 public final class DotTerminatedMessageReader extends BufferedReader
 {
-    private static final char LF = '\n';
-    private static final char CR = '\r';
-    private static final int DOT = '.';
+    private static final @IntVal(10) char LF = '\n';
+    private static final @IntVal(13) char CR = '\r';
+    private static final @IntVal(46) int DOT = '.';
 
     private boolean atBeginning;
     private boolean eof;
@@ -73,7 +76,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      *            stream.
      */
     @Override
-    public int read() throws IOException {
+    public @IntRange(from=-1, to=255) int read() throws IOException {
         synchronized (lock) {
             if (eof) {
                 return -1; // Don't allow read past EOF

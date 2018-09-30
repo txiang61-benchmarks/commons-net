@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.io.PushbackInputStream;
 import java.io.UnsupportedEncodingException;
 
+import org.checkerframework.common.value.qual.IntRange;
+
 /***
  * This class wraps an input stream, replacing all occurrences
  * of &lt;CR&gt;&lt;LF&gt; (carriage return followed by a linefeed),
@@ -75,7 +77,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
     }
 
 
-    private int __read() throws IOException
+    private @IntRange(from=-1, to=255) int __read() throws IOException
     {
         int ch;
 
@@ -118,7 +120,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *            stream.
      ***/
     @Override
-    public int read() throws IOException
+    public @IntRange(from=-1, to=255) int read() throws IOException
     {
         if (_noConversionRequired) {
             return super.read();

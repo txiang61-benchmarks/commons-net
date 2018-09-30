@@ -21,6 +21,9 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.checkerframework.common.value.qual.IntRange;
+import org.checkerframework.common.value.qual.IntVal;
+
 /***
  * This class wraps an input stream, replacing all singly occurring
  * &lt;LF&gt; (linefeed) characters with &lt;CR&gt;&lt;LF&gt; (carriage return
@@ -62,7 +65,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *            stream.
      ***/
     @Override
-    public int read() throws IOException
+    public @IntRange(from=-1, to=255) int read() throws IOException
     {
         int ch;
 

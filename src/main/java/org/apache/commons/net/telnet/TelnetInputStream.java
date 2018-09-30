@@ -22,13 +22,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InterruptedIOException;
 
+import org.checkerframework.common.value.qual.IntRange;
+import org.checkerframework.common.value.qual.IntVal;
+
 final class TelnetInputStream extends BufferedInputStream implements Runnable
 {
     /** End of file has been reached */
-    private static final int EOF = -1;
+    private static final @IntVal(-1) int EOF = -1;
 
     /** Read would block */
-    private static final int WOULD_BLOCK = -2;
+    private static final @IntVal(-2) int WOULD_BLOCK = -2;
 
     // TODO should these be private enums?
     static final int _STATE_DATA = 0, _STATE_IAC = 1, _STATE_WILL = 2,
@@ -349,7 +352,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
     }
 
     @Override
-    public int read() throws IOException
+    public @IntRange(from=-1, to=255) int read() throws IOException
     {
         // Critical section because we're altering __bytesAvailable,
         // __queueHead, and the contents of _queue in addition to
