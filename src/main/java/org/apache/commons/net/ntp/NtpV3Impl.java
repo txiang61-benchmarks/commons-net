@@ -17,6 +17,8 @@ package org.apache.commons.net.ntp;
  */
 
 import java.net.DatagramPacket;
+import cast.SignednessConvert;
+import org.checkerframework.common.value.qual.IntRange;
 
 /***
  * Implementation of NtpV3Packet with methods converting Java objects to/from
@@ -52,7 +54,7 @@ public class NtpV3Impl implements NtpV3Packet
 //    private static final int KEY_IDENTIFIER_INDEX = 48;
 //    private static final int MESSAGE_DIGEST = 54; /* len 16 bytes */
 
-    private final byte[] buf = new byte[48];
+    private final @IntRange(from=0, to=255) byte[] buf = new byte[48];
 
     private volatile DatagramPacket dp;
 
@@ -133,7 +135,7 @@ public class NtpV3Impl implements NtpV3Packet
     @Override
     public int getPoll()
     {
-        return buf[POLL_INDEX];
+        return SignednessConvert.unsignedToSignedByte(buf[POLL_INDEX]);
     }
 
     /***
@@ -157,7 +159,7 @@ public class NtpV3Impl implements NtpV3Packet
     @Override
     public int getPrecision()
     {
-        return buf[PRECISION_INDEX];
+        return SignednessConvert.unsignedToSignedByte(buf[PRECISION_INDEX]);
     }
 
     /***
@@ -656,7 +658,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param b input byte
      * @return unsigned int value of byte
      */
-    protected static final int ui(byte b)
+    protected static final int ui(@IntRange(from=0, to=255) byte b)
     {
         int i = b & 0xFF;
         return i;
@@ -670,7 +672,7 @@ public class NtpV3Impl implements NtpV3Packet
      * @param b input byte
      * @return unsigned long value of byte
      */
-    protected static final long ul(byte b)
+    protected static final long ul(@IntRange(from=0, to=255) byte b)
     {
         long i = b & 0xFF;
         return i;

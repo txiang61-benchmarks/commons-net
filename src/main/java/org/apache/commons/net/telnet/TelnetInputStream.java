@@ -24,6 +24,7 @@ import java.io.InterruptedIOException;
 
 import org.checkerframework.common.value.qual.IntRange;
 import org.checkerframework.common.value.qual.IntVal;
+import cast.SignednessConvert;
 
 final class TelnetInputStream extends BufferedInputStream implements Runnable
 {
@@ -535,7 +536,7 @@ final class TelnetInputStream extends BufferedInputStream implements Runnable
 
         do
         {
-            buffer[offset++] = (byte)ch;
+            buffer[offset++] = SignednessConvert.toSignedByte(ch);
         }
         while (--length > 0 && (ch = read()) != EOF);
 

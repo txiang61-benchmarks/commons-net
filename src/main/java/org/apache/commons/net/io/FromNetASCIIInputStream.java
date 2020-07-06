@@ -23,6 +23,7 @@ import java.io.PushbackInputStream;
 import java.io.UnsupportedEncodingException;
 
 import org.checkerframework.common.value.qual.IntRange;
+import cast.SignednessConvert;
 
 /***
  * This class wraps an input stream, replacing all occurrences
@@ -163,7 +164,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[], int offset, int length) throws IOException
+    public int read(byte buffer[], @IntRange(from=0) int offset, @IntRange(from=0) int length) throws IOException
     {
         if (_noConversionRequired) {
             return super.read(buffer, offset, length);
@@ -193,7 +194,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
 
         do
         {
-            buffer[offset++] = (byte)ch;
+            buffer[offset++] = SignednessConvert.toSignedByte(ch);
         }
         while (--__length > 0 && (ch = __read()) != -1);
 

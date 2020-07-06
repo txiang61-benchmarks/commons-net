@@ -20,6 +20,8 @@ package org.apache.commons.net.tftp;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
+import org.checkerframework.common.value.qual.IntRange;
+
 /***
  * TFTPPacket is an abstract class encapsulating the functionality common
  * to the 5 types of TFTP packets.  It also provides a static factory
@@ -185,7 +187,7 @@ public abstract class TFTPPacket
      * @param data The buffer to store the packet and to use in the datagram.
      * @return The datagram argument.
      ***/
-    abstract DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data);
+    abstract DatagramPacket _newDatagram(DatagramPacket datagram, @IntRange(from=0, to=255) byte[] data);
 
     /***
      * Creates a UDP datagram containing all the TFTP packet

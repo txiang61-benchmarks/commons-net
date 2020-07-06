@@ -23,6 +23,7 @@ import java.net.DatagramPacket;
 import java.net.SocketException;
 
 import org.apache.commons.net.DatagramSocketClient;
+import org.checkerframework.common.value.qual.IntRange;
 
 /***
  * The TFTP class exposes a set of methods to allow you to deal with the TFTP
@@ -104,7 +105,7 @@ public class TFTP extends DatagramSocketClient
      * efficient during file sends.  It saves the creation of an
      * additional buffer and prevents a buffer copy in _newDataPcket().
      ***/
-    byte[] _sendBuffer;
+    @IntRange(from=0, to=255) byte[] _sendBuffer;
 
 
     /***

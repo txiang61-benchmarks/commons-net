@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.net.util.Base64;
+import org.checkerframework.common.value.qual.IntVal;
 
 /**
  * Experimental attempt at FTP client that tunnels over an HTTP proxy connection.
@@ -45,7 +46,7 @@ public class FTPHTTPClient extends FTPClient {
     private final String proxyPassword;
     private final Charset charset;
 
-    private static final byte[] CRLF={'\r', '\n'};
+    private static final @IntVal({13, 10}) byte[] CRLF={'\r', '\n'};
     private final Base64 base64 = new Base64();
 
     private String tunnelHost; // Save the host when setting up a tunnel (needed for EPSV)

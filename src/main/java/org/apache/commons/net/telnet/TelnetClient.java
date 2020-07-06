@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.checkerframework.common.value.qual.IntRange;
+
 /***
  * The TelnetClient class implements the simple network virtual
  * terminal (NVT) for the Telnet protocol according to RFC 854.  It
@@ -272,7 +274,7 @@ public class TelnetClient extends Telnet
      * @throws IllegalArgumentException  on error
      * @since 3.0
      ***/
-    public void sendCommand(byte command)
+    public void sendCommand(@IntRange(from=0, to=255) byte command)
     throws IOException, IllegalArgumentException
     {
         _sendCommand(command);

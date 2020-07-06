@@ -19,7 +19,7 @@ package org.apache.commons.net.util;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-
+import cast.SignednessConvert;
 
 
 /**
@@ -367,7 +367,7 @@ public class Base64 {
             pos = 0;
             readPos = 0;
         } else {
-            byte[] b = new byte[buffer.length * DEFAULT_BUFFER_RESIZE_FACTOR];
+        	byte[] b = new byte[buffer.length * DEFAULT_BUFFER_RESIZE_FACTOR];
             System.arraycopy(buffer, 0, b, 0, buffer.length);
             buffer = b;
         }
@@ -554,9 +554,9 @@ public class Base64 {
                         modulus = (++modulus) % 4;
                         x = (x << 6) + result;
                         if (modulus == 0) {
-                            buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                            buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
-                            buffer[pos++] = (byte) (x & MASK_8BITS);
+                            buffer[pos++] = SignednessConvert.toSignedByte((x >> 16) & MASK_8BITS);
+                            buffer[pos++] = SignednessConvert.toSignedByte((x >> 8) & MASK_8BITS);
+                            buffer[pos++] = SignednessConvert.toSignedByte(x & MASK_8BITS);
                         }
                     }
                 }
@@ -571,11 +571,11 @@ public class Base64 {
             switch (modulus) {
                 case 2 :
                     x = x << 6;
-                    buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
+                    buffer[pos++] = SignednessConvert.toSignedByte((x >> 16) & MASK_8BITS);
                     break;
                 case 3 :
-                    buffer[pos++] = (byte) ((x >> 16) & MASK_8BITS);
-                    buffer[pos++] = (byte) ((x >> 8) & MASK_8BITS);
+                    buffer[pos++] = SignednessConvert.toSignedByte((x >> 16) & MASK_8BITS);
+                    buffer[pos++] = SignednessConvert.toSignedByte((x >> 8) & MASK_8BITS);
                     break;
                 default:
                     break;  // other values ignored

@@ -19,6 +19,9 @@ package org.apache.commons.net.tftp;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import cast.SignednessConvert;
+
+import org.checkerframework.common.value.qual.IntRange;
 
 /***
  * A final class derived from TFTPPacket definiing the TFTP Acknowledgement
@@ -96,7 +99,7 @@ public final class TFTPAckPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
+    DatagramPacket _newDatagram(DatagramPacket datagram, @IntRange(from=0, to=255) byte[] data)
     {
         data[0] = 0;
         data[1] = (byte)_type;
@@ -126,7 +129,7 @@ public final class TFTPAckPacket extends TFTPPacket
     @Override
     public DatagramPacket newDatagram()
     {
-        byte[] data;
+    	@IntRange(from=0, to=255) byte[] data;
 
         data = new byte[4];
         data[0] = 0;

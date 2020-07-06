@@ -21,6 +21,8 @@ import java.io.FilterOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.checkerframework.common.value.qual.IntRange;
+
 /***
  * This class wraps an output stream, replacing all occurrences
  * of &lt;CR&gt;&lt;LF&gt; (carriage return followed by a linefeed),
@@ -53,7 +55,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
     }
 
 
-    private void __write(int ch) throws IOException
+    private void __write(@IntRange(from=-128, to=255) int ch) throws IOException
     {
         switch (ch)
         {
@@ -96,7 +98,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(int ch)
+    public synchronized void write(@IntRange(from=-128, to=255) int ch)
     throws IOException
     {
         if (FromNetASCIIInputStream._noConversionRequired)
@@ -135,7 +137,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(byte buffer[], int offset, int length)
+    public synchronized void write(byte buffer[], @IntRange(from=0) int offset, @IntRange(from=0) int length)
     throws IOException
     {
         if (FromNetASCIIInputStream._noConversionRequired)

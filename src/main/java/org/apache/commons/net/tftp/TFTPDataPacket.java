@@ -19,6 +19,9 @@ package org.apache.commons.net.tftp;
 
 import java.net.DatagramPacket;
 import java.net.InetAddress;
+import cast.SignednessConvert;
+
+import org.checkerframework.common.value.qual.IntRange;
 
 /***
  * A final class derived from TFTPPacket definiing the TFTP Data
@@ -53,13 +56,13 @@ public final class TFTPDataPacket extends TFTPPacket
     int _blockNumber;
 
     /*** The length of the data. ***/
-    int _length;
+    @IntRange(from=0) int _length;
 
     /*** The offset into the _data array at which the data begins. ***/
-    int _offset;
+    @IntRange(from=0) int _offset;
 
     /*** The data stored in the packet. ***/
-    byte[] _data;
+    @IntRange(from=0, to=255) byte[] _data;
 
     /***
      * Creates a data packet to be sent to a host at a given port
@@ -77,7 +80,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * @param length The length of the data.
      ***/
     public TFTPDataPacket(InetAddress destination, int port, int blockNumber,
-                          byte[] data, int offset, int length)
+    		@IntRange(from=0, to=255) byte[] data, @IntRange(from=0) int offset, @IntRange(from=0) int length)
     {
         super(TFTPPacket.DATA, destination, port);
 
@@ -93,7 +96,7 @@ public final class TFTPDataPacket extends TFTPPacket
     }
 
     public TFTPDataPacket(InetAddress destination, int port, int blockNumber,
-                          byte[] data)
+    		byte[] data)
     {
         this(destination, port, blockNumber, data, 0, data.length);
     }
@@ -112,7 +115,7 @@ public final class TFTPDataPacket extends TFTPPacket
     {
         super(TFTPPacket.DATA, datagram.getAddress(), datagram.getPort());
 
-        _data = datagram.getData();
+        _data = SignednessConvert.signedToUnsignedByte(datagram.getData());
         _offset = 4;
 
         if (getType() != _data[1]) {
@@ -140,7 +143,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
+    DatagramPacket _newDatagram(DatagramPacket datagram, @IntRange(from=0, to=255) byte[] data)
     {
         data[0] = 0;
         data[1] = (byte)_type;
@@ -175,7 +178,7 @@ public final class TFTPDataPacket extends TFTPPacket
     @Override
     public DatagramPacket newDatagram()
     {
-        byte[] data;
+    	@IntRange(from=0, to=255) byte[] data;
 
         data = new byte[_length + 4];
         data[0] = 0;
@@ -213,7 +216,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * @param offset The offset into the array where the data starts.
      * @param length The length of the data.
      ***/
-    public void setData(byte[] data, int offset, int length)
+    public void setData(@IntRange(from=0, to=255) byte[] data, @IntRange(from=0) int offset, @IntRange(from=0) int length)
     {
         _data = data;
         _offset = offset;
@@ -231,7 +234,7 @@ public final class TFTPDataPacket extends TFTPPacket
      *
      * @return The length of the data part of the data packet.
      ***/
-    public int getDataLength()
+    public @IntRange(from=0) int getDataLength()
     {
         return _length;
     }
@@ -243,7 +246,7 @@ public final class TFTPDataPacket extends TFTPPacket
      * @return The offset into the byte array where the packet data actually
      *         starts.
      ***/
-    public int getDataOffset()
+    public @IntRange(from=0) int getDataOffset()
     {
         return _offset;
     }
@@ -253,7 +256,7 @@ public final class TFTPDataPacket extends TFTPPacket
      *
      * @return The byte array containing the packet data.
      ***/
-    public byte[] getData()
+    public @IntRange(from=0, to=255) byte[] getData()
     {
         return _data;
     }

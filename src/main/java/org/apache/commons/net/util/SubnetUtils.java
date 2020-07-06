@@ -18,6 +18,8 @@ package org.apache.commons.net.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.checkerframework.common.value.qual.IntRange;
+
 
 /**
  * A class that performs some subnet calculations given a network address and a subnet mask.
@@ -233,7 +235,7 @@ public class SubnetUtils {
          * @return the count of addresses, may be zero.
          * @since 3.4
          */
-        public long getAddressCountLong() {
+        public @IntRange(from=0) long getAddressCountLong() {
             long b = broadcastLong();
             long n = networkLong();
             long count = b - n + (isInclusiveHostCount() ? 1 : -1);

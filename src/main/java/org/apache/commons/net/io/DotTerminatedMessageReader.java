@@ -76,7 +76,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      *            stream.
      */
     @Override
-    public @IntRange(from=-1, to=255) int read() throws IOException {
+    public @IntRange(from=-1, to=65535) int read() throws IOException {
         synchronized (lock) {
             if (eof) {
                 return -1; // Don't allow read past EOF

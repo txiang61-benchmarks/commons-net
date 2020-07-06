@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import org.apache.commons.net.SocketClient;
+import org.checkerframework.common.value.qual.IntVal;
+import org.checkerframework.common.value.qual.IntRange;
 
 class Telnet extends SocketClient
 {
@@ -31,27 +33,27 @@ class Telnet extends SocketClient
 
     static final boolean debugoptions =  /*true;*/ false;
 
-    static final byte[] _COMMAND_DO = {
+    static final @IntVal({255,253}) byte[] _COMMAND_DO = {
                                           (byte)TelnetCommand.IAC, (byte)TelnetCommand.DO
                                       };
 
-    static final byte[] _COMMAND_DONT = {
+    static final @IntVal({255, 254}) byte[] _COMMAND_DONT = {
                                             (byte)TelnetCommand.IAC, (byte)TelnetCommand.DONT
                                         };
 
-    static final byte[] _COMMAND_WILL = {
+    static final @IntVal({255, 251}) byte[] _COMMAND_WILL = {
                                             (byte)TelnetCommand.IAC, (byte)TelnetCommand.WILL
                                         };
 
-    static final byte[] _COMMAND_WONT = {
+    static final @IntVal({255, 252}) byte[] _COMMAND_WONT = {
                                             (byte)TelnetCommand.IAC, (byte)TelnetCommand.WONT
                                         };
 
-    static final byte[] _COMMAND_SB = {
+    static final @IntVal({255, 250}) byte[] _COMMAND_SB = {
                                           (byte)TelnetCommand.IAC, (byte)TelnetCommand.SB
                                       };
 
-    static final byte[] _COMMAND_SE = {
+    static final @IntVal({255, 240}) byte[] _COMMAND_SE = {
                                           (byte)TelnetCommand.IAC, (byte)TelnetCommand.SE
                                       };
 
@@ -82,7 +84,7 @@ class Telnet extends SocketClient
     /***
      * Is sequence (for subnegotiation)
      ***/
-    static final byte[] _COMMAND_IS = {
+    static final @IntVal({24, 0}) byte[] _COMMAND_IS = {
                                           (byte) TERMINAL_TYPE, (byte) TERMINAL_TYPE_IS
                                       };
 
@@ -104,7 +106,7 @@ class Telnet extends SocketClient
     /***
      * AYT sequence
      ***/
-    static final byte[] _COMMAND_AYT = {
+    static final @IntVal({255, 246}) byte[] _COMMAND_AYT = {
                                           (byte) TelnetCommand.IAC, (byte) TelnetCommand.AYT
                                        };
 
@@ -795,7 +797,7 @@ class Telnet extends SocketClient
      * @throws IOException - Exception in I/O.
      * @since 3.0
      */
-    final synchronized void _sendCommand(byte cmd) throws IOException
+    final synchronized void _sendCommand(@IntRange(from=0, to=255) byte cmd) throws IOException
     {
             _output_.write(TelnetCommand.IAC);
             _output_.write(cmd);

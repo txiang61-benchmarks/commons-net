@@ -25,6 +25,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.Socket;
 
+import org.checkerframework.common.value.qual.IntRange;
+
 /***
  * The Util class cannot be instantiated and stores short static convenience
  * methods that are often quite useful.
@@ -95,7 +97,7 @@ public final class Util
     {
         int numBytes;
         long total = 0;
-        byte[] buffer = new byte[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
+        @IntRange(from=0, to=255) byte[] buffer = new byte[bufferSize > 0 ? bufferSize : DEFAULT_COPY_BUFFER_SIZE];
 
         try
         {

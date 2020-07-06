@@ -20,6 +20,8 @@ package org.apache.commons.net.io;
 import java.io.IOException;
 import java.io.Writer;
 
+import org.checkerframework.common.value.qual.IntRange;
+
 /***
  * DotTerminatedMessageWriter is a class used to write messages to a
  * server that are terminated by a single dot followed by a
@@ -72,7 +74,7 @@ public final class DotTerminatedMessageWriter extends Writer
      *            underlying output.
      ***/
     @Override
-    public void write(int ch) throws IOException
+    public void write(@IntRange(from=0, to=65535) int ch) throws IOException
     {
         synchronized (lock)
         {

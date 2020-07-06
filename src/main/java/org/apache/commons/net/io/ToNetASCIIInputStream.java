@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 import org.checkerframework.common.value.qual.IntRange;
 import org.checkerframework.common.value.qual.IntVal;
+import cast.SignednessConvert;
 
 /***
  * This class wraps an input stream, replacing all singly occurring
@@ -158,7 +159,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
 
         do
         {
-            buffer[offset++] = (byte)ch;
+            buffer[offset++] = SignednessConvert.toSignedByte(ch);
         }
         while (--length > 0 && (ch = read()) != -1);
 

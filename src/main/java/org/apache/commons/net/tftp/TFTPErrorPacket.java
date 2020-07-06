@@ -20,6 +20,10 @@ package org.apache.commons.net.tftp;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 
+import org.checkerframework.common.value.qual.IntRange;
+
+import cast.SignednessConvert;
+
 /***
  * A final class derived from TFTPPacket definiing the TFTP Error
  * packet type.
@@ -146,7 +150,7 @@ public final class TFTPErrorPacket extends TFTPPacket
      * @return The datagram argument.
      ***/
     @Override
-    DatagramPacket _newDatagram(DatagramPacket datagram, byte[] data)
+    DatagramPacket _newDatagram(DatagramPacket datagram, @IntRange(from=0, to=255) byte[] data)
     {
         int length;
 
@@ -185,7 +189,7 @@ public final class TFTPErrorPacket extends TFTPPacket
     @Override
     public DatagramPacket newDatagram()
     {
-        byte[] data;
+    	@IntRange(from=0, to=255) byte[] data;
         int length;
 
         length = _message.length();
