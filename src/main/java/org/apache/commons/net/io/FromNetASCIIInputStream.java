@@ -143,7 +143,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[]) throws IOException
+    public @IntRange(from=-1, to=2147483647) int read(byte buffer[]) throws IOException
     {
         return read(buffer, 0, buffer.length);
     }
@@ -164,7 +164,7 @@ public final class FromNetASCIIInputStream extends PushbackInputStream
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[], @IntRange(from=0) int offset, @IntRange(from=0) int length) throws IOException
+    public @IntRange(from=-1, to=2147483647) int read(byte buffer[], int offset, int length) throws IOException
     {
         if (_noConversionRequired) {
             return super.read(buffer, offset, length);

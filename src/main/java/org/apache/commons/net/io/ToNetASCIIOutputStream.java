@@ -111,7 +111,7 @@ public final class ToNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(byte buffer[], @IntRange(from=0) int offset, @IntRange(from=0) int length)
+    public synchronized void write(byte buffer[], int offset, int length)
     throws IOException
     {
         while (length-- > 0) {

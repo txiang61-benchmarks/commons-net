@@ -111,7 +111,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[]) throws IOException
+    public @IntRange(from=-1, to=2147483647) int read(byte buffer[]) throws IOException
     {
         return read(buffer, 0, buffer.length);
     }
@@ -132,7 +132,7 @@ public final class ToNetASCIIInputStream extends FilterInputStream
      *            stream.
      ***/
     @Override
-    public int read(byte buffer[], int offset, int length) throws IOException
+    public @IntRange(from=-1, to=2147483647) int read(byte buffer[], int offset, int length) throws IOException
     {
         int ch, off;
 

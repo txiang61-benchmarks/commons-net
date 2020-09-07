@@ -137,7 +137,7 @@ public final class FromNetASCIIOutputStream extends FilterOutputStream
      *            stream.
      ***/
     @Override
-    public synchronized void write(byte buffer[], @IntRange(from=0) int offset, @IntRange(from=0) int length)
+    public synchronized void write(byte buffer[], int offset, int length)
     throws IOException
     {
         if (FromNetASCIIInputStream._noConversionRequired)

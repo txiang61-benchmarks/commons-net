@@ -141,7 +141,7 @@ final class TelnetOutputStream extends OutputStream
      *            stream.
      ***/
     @Override
-    public void write(byte buffer[], @IntRange(from=0) int offset, @IntRange(from=0) int length) throws IOException
+    public void write(byte buffer[], int offset, int length) throws IOException
     {
         synchronized (__client)
         {

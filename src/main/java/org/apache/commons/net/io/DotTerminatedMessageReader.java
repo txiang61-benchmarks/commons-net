@@ -147,7 +147,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      *            stream.
      */
     @Override
-    public int read(char[] buffer) throws IOException
+    public @IntRange(from=-1, to=2147483647) int read(char[] buffer) throws IOException
     {
         return read(buffer, 0, buffer.length);
     }
@@ -167,7 +167,7 @@ public final class DotTerminatedMessageReader extends BufferedReader
      *            stream.
      */
     @Override
-    public int read(char[] buffer, int offset, int length) throws IOException
+    public @IntRange(from=-1, to=2147483647) int read(char[] buffer, int offset, int length) throws IOException
     {
         if (length < 1)
         {
